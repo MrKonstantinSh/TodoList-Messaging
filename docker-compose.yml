@@ -1,3 +1,7 @@
+networks:
+  dev:
+    driver: bridge
+
 services:
   todolist-webapi:
     container_name: todolist.webapi
@@ -6,10 +10,12 @@ services:
       context: .
       dockerfile: ./src/TodoList.WebApi/Dockerfile
     ports:
-      - "3333:80"
-      - "4444:443"
+      - '3333:80'
+      - '4444:443'
     depends_on:
       - db
+    networks: 
+      - dev
   
   db:
     container_name: todolist.db
@@ -23,6 +29,8 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - dev
 
 volumes:
   db:
