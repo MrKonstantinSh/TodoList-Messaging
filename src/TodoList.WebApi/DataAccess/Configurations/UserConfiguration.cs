@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TodoList.WebApi.Features.User;
+using TodoList.WebApi.Features.Users;
 
 namespace TodoList.WebApi.DataAccess.Configurations;
 

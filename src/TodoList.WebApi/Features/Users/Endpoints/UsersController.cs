@@ -1,9 +1,9 @@
-using FluentResults.Extensions.AspNetCore;
+using Ardalis.Result.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TodoList.WebApi.Features.User.Commands;
+using TodoList.WebApi.Features.Users.Commands;
 
-namespace TodoList.WebApi.Features.User.Endpoints;
+namespace TodoList.WebApi.Features.Users.Endpoints;
 
 [Route("[controller]")]
 public sealed class UsersController : ControllerBase
@@ -16,11 +16,9 @@ public sealed class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+    public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request)
     {
         var command = new CreateUserCommand(request.FirstName, request.LastName, request.Email);
-        var result = await _mediator.Send(command);
-
-        return result.ToActionResult();
+        return this.ToActionResult(await _mediator.Send(command));
     }
 }

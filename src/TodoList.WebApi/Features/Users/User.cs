@@ -1,6 +1,6 @@
 ﻿using TodoList.WebApi.Shared;
 
-namespace TodoList.WebApi.Features.User;
+namespace TodoList.WebApi.Features.Users;
 
 public sealed class User : EntityBase
 {

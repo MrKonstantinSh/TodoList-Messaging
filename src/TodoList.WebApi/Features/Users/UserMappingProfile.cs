@@ -1,7 +1,7 @@
 using AutoMapper;
-using TodoList.WebApi.Features.User.Commands;
+using TodoList.WebApi.Features.Users.Commands;
 
-namespace TodoList.WebApi.Features.User;
+namespace TodoList.WebApi.Features.Users;
 
 public sealed class UserMappingProfile : Profile
 {
