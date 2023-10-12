@@ -43,4 +43,11 @@ public sealed class UsersController: ControllerBase
         var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email);
         return this.ToActionResult(await _mediator.Send(command));
     }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<bool>> Delete([FromRoute] Guid id)
+    {
+        var command = new DeleteUserCommand(id);
+        return this.ToActionResult(await _mediator.Send(command));
+    }
 }
