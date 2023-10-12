@@ -16,8 +16,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
 builder.Services.AddMediatR(config =>
-    config.RegisterServicesFromAssemblyContaining<CreateUserCommand>()
-        .AddBehavior<IPipelineBehavior<CreateUserCommand, Result<User>>, ValidationBehavior<CreateUserCommand, User>>());
+{
+    config.RegisterServicesFromAssemblyContaining<CreateUserCommand>();
+    
+    config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+    config.AddBehavior(typeof(IPipelineBehavior<CreateUserCommand, Result<User>>), typeof(ValidationBehavior<CreateUserCommand, User>));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
