@@ -20,7 +20,7 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssemblyContaining<CreateUserCommand>();
     
     config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-    config.AddBehavior(typeof(IPipelineBehavior<CreateUserCommand, Result<User>>), typeof(ValidationBehavior<CreateUserCommand, User>));
+    config.RegisterValidationBehaviors();
 });
 
 builder.Services.AddControllers();
