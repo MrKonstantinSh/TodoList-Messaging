@@ -11,6 +11,8 @@ public static class ValidationBehaviorsRegistrationExtension
     {
         config.AddBehavior(typeof(IPipelineBehavior<CreateUserCommand, Result<User>>),
             typeof(ValidationBehavior<CreateUserCommand, User>));
+        config.AddBehavior(typeof(IPipelineBehavior<UpdateUserCommand, Result<User?>>),
+            typeof(ValidationBehavior<UpdateUserCommand, User?>));
 
         return config;
     }
