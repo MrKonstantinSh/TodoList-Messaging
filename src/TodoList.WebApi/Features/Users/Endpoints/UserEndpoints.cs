@@ -22,6 +22,13 @@ public sealed class UsersController: ControllerBase
         var query = new GetUsersQuery();
         return this.ToActionResult(await _mediator.Send(query));
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<User?>> GetById([FromRoute] Guid id)
+    {
+        var query = new GetUserByIdQuery(id);
+        return this.ToActionResult(await _mediator.Send(query));
+    }
     
     [HttpPost]
     public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request)
