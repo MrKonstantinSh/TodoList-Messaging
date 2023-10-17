@@ -7,9 +7,9 @@ using TodoList.WebApi.DataAccess;
 namespace TodoList.WebApi.Features.Todos.Commands;
 
 public sealed record CreateTodoCommand(string Title, string Description, string Status,
-    ICollection<Guid> AssignedUserIds) : IRequest<Result<Todo>>;
+    ICollection<Guid> AssignedUserIds) : IRequest<Result<TodoDto>>;
 
-public sealed class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Result<Todo>>
+public sealed class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Result<TodoDto>>
 {
     private readonly IMapper _mapper;
     private readonly AppDbContext _context;
@@ -20,9 +20,14 @@ public sealed class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Resul
         _context = context;
     }
 
-    public async Task<Result<Todo>> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
+    public async Task<Result<TodoDto>> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
         var todo = _mapper.Map<Todo>(request);
+
+        if (string.IsNullOrEmpty(todo.Status))
+        {
+            todo.Status = Todo.InitialValue;
+        }
 
         var users = await _context.Users
             .Where(u => request.AssignedUserIds.Contains(u.Id))
@@ -34,6 +39,6 @@ public sealed class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Resul
         _context.Add(todo);
         await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-        return Result<Todo>.Success(todo);
+        return Result<TodoDto>.Success(new TodoDto(todo));
     }
 }

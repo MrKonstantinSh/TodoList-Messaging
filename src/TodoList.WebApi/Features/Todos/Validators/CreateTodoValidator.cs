@@ -13,7 +13,7 @@ public class CreateTodoValidator : AbstractValidator<CreateTodoCommand>
         RuleFor(t => t.Title)
             .NotNull().WithMessage($"The {nameof(Todo.Title)} must not be null.")
             .NotEmpty().WithMessage($"The {nameof(Todo.Title)} must not be empty.")
-            .MaximumLength(250).WithMessage($"The {nameof(User.FirstName)} must not exceed 250 characters in length.");
+            .MaximumLength(250).WithMessage($"The {nameof(Todo.Title)} must not exceed 250 characters in length.");
 
         RuleFor(t => t.Description)
             .NotNull().WithMessage($"The {nameof(Todo.Description)} must not be null.")

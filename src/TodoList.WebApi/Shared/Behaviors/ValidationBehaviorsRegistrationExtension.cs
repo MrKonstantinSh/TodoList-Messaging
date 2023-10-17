@@ -16,8 +16,8 @@ public static class ValidationBehaviorsRegistrationExtension
         config.AddBehavior(typeof(IPipelineBehavior<UpdateUserCommand, Result<UserDto?>>),
             typeof(ValidationBehavior<UpdateUserCommand, UserDto?>));
         
-        config.AddBehavior(typeof(IPipelineBehavior<CreateTodoCommand, Result<Todo>>),
-            typeof(ValidationBehavior<CreateTodoCommand, Todo>));
+        config.AddBehavior(typeof(IPipelineBehavior<CreateTodoCommand, Result<TodoDto>>),
+            typeof(ValidationBehavior<CreateTodoCommand, TodoDto>));
 
         return config;
     }
