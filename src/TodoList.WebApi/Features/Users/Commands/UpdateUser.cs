@@ -7,9 +7,9 @@ using TodoList.WebApi.DataAccess;
 namespace TodoList.WebApi.Features.Users.Commands;
 
 public sealed record UpdateUserCommand(Guid Id, string FirstName, string LastName, string? Email)
-    : IRequest<Result<User?>>;
+    : IRequest<Result<UserDto?>>;
 
-public sealed class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Result<User?>>
+public sealed class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Result<UserDto?>>
 {
     private readonly IMapper _mapper;
     private readonly AppDbContext _context;
@@ -20,7 +20,7 @@ public sealed class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Resul
         _context = context;
     }
 
-    public async Task<Result<User?>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto?>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(request);
         var existingUser = await _context.Users
@@ -30,12 +30,12 @@ public sealed class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Resul
         
         if (existingUser is null)
         {
-            return Result<User?>.NotFound();
+            return Result<UserDto?>.NotFound();
         }
         
         _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         
-        return Result<User?>.Success(user);
+        return Result<UserDto?>.Success(new UserDto(user));
     }
 }

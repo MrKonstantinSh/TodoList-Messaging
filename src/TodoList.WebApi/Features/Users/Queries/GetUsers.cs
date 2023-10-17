@@ -5,9 +5,9 @@ using TodoList.WebApi.DataAccess;
 
 namespace TodoList.WebApi.Features.Users.Queries;
 
-public sealed record GetUsersQuery : IRequest<Result<IEnumerable<User>>>;
+public sealed record GetUsersQuery : IRequest<Result<IEnumerable<UserDto>>>;
 
-public sealed class GetUsersHandler : IRequestHandler<GetUsersQuery, Result<IEnumerable<User>>>
+public sealed class GetUsersHandler : IRequestHandler<GetUsersQuery, Result<IEnumerable<UserDto>>>
 {
     private readonly AppDbContext _context;
 
@@ -16,10 +16,10 @@ public sealed class GetUsersHandler : IRequestHandler<GetUsersQuery, Result<IEnu
         _context = context;
     }
 
-    public async Task<Result<IEnumerable<User>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await _context.Users.ToListAsync(cancellationToken).ConfigureAwait(false);
 
-        return Result<IEnumerable<User>>.Success(users);
+        return Result<IEnumerable<UserDto>>.Success(users.Select(u => new UserDto(u)));
     }
 }

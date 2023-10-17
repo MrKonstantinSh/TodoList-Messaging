@@ -5,9 +5,9 @@ using TodoList.WebApi.DataAccess;
 
 namespace TodoList.WebApi.Features.Users.Queries;
 
-public sealed record GetUserByIdQuery(Guid Id) : IRequest<Result<User?>>;
+public sealed record GetUserByIdQuery(Guid Id) : IRequest<Result<UserDto?>>;
 
-public sealed class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, Result<User?>>
+public sealed class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, Result<UserDto?>>
 {
     private readonly AppDbContext _context;
 
@@ -16,12 +16,12 @@ public sealed class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, Resul
         _context = context;
     }
 
-    public async Task<Result<User?>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto?>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             .ConfigureAwait(false);
 
-        return user is null ? Result<User?>.NotFound() : Result<User?>.Success(user);
+        return user is null ? Result<UserDto?>.NotFound() : Result<UserDto?>.Success(new UserDto(user));
     }
 }

@@ -5,9 +5,9 @@ using TodoList.WebApi.DataAccess;
 
 namespace TodoList.WebApi.Features.Users.Commands;
 
-public sealed record CreateUserCommand(string FirstName, string LastName, string? Email) : IRequest<Result<User>>;
+public sealed record CreateUserCommand(string FirstName, string LastName, string? Email) : IRequest<Result<UserDto>>;
 
-public sealed class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<User>>
+public sealed class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<UserDto>>
 {
     private readonly IMapper _mapper;
     private readonly AppDbContext _context;
@@ -18,13 +18,13 @@ public sealed class CreateUserHandler : IRequestHandler<CreateUserCommand, Resul
         _context = context;
     }
     
-    public async Task<Result<User>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(request);
         
         _context.Users.Add(user);
         await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         
-        return Result.Success(user);
+        return Result<UserDto>.Success(new UserDto(user));
     }
 }

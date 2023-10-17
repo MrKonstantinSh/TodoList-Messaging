@@ -11,10 +11,10 @@ public static class ValidationBehaviorsRegistrationExtension
 {
     public static MediatRServiceConfiguration RegisterValidationBehaviors(this MediatRServiceConfiguration config)
     {
-        config.AddBehavior(typeof(IPipelineBehavior<CreateUserCommand, Result<User>>),
-            typeof(ValidationBehavior<CreateUserCommand, User>));
-        config.AddBehavior(typeof(IPipelineBehavior<UpdateUserCommand, Result<User?>>),
-            typeof(ValidationBehavior<UpdateUserCommand, User?>));
+        config.AddBehavior(typeof(IPipelineBehavior<CreateUserCommand, Result<UserDto>>),
+            typeof(ValidationBehavior<CreateUserCommand, UserDto>));
+        config.AddBehavior(typeof(IPipelineBehavior<UpdateUserCommand, Result<UserDto?>>),
+            typeof(ValidationBehavior<UpdateUserCommand, UserDto?>));
         
         config.AddBehavior(typeof(IPipelineBehavior<CreateTodoCommand, Result<Todo>>),
             typeof(ValidationBehavior<CreateTodoCommand, Todo>));
