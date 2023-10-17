@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.WebApi.Features.Todos.Commands;
+using TodoList.WebApi.Features.Todos.Queries;
 
 namespace TodoList.WebApi.Features.Todos.Endpoints;
 
@@ -13,6 +14,13 @@ public sealed class TodosController : ControllerBase
     public TodosController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<TodoDto>>> GetAll()
+    {
+        var query = new GetTodosQuery();
+        return this.ToActionResult(await _mediator.Send(query));
     }
 
     [HttpPost]
