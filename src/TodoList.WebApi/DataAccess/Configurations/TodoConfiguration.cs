@@ -26,7 +26,8 @@ public sealed class TodoConfiguration : IEntityTypeConfiguration<Todo>
         
         builder.Property(u => u.Status)
             .HasColumnName("status")
-            .HasMaxLength(20);
+            .HasMaxLength(20)
+            .HasDefaultValue(Todo.InitialValue);
         
         builder
             .HasMany<User>(t => t.AssignedUsers)

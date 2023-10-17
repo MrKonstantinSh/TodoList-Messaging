@@ -5,7 +5,9 @@ namespace TodoList.WebApi.Features.Todos;
 
 public sealed class Todo : EntityBase
 {
-    public Todo(string title, string description, string status = "To Do")
+    public const string InitialValue = "To do";
+    
+    public Todo(string title, string description, string status)
     {
         Title = title;
         Description = description;
