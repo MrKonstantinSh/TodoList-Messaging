@@ -20,6 +20,7 @@ public sealed class GetTodoByIdHandler : IRequestHandler<GetTodoByIdQuery, Resul
     {
         var todo = await _context.Todos
             .Include(t => t.AssignedUsers)
+            .AsNoTracking()
             .FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken)
             .ConfigureAwait(false);
 

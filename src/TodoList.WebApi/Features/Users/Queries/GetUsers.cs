@@ -18,7 +18,10 @@ public sealed class GetUsersHandler : IRequestHandler<GetUsersQuery, Result<IEnu
 
     public async Task<Result<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await _context.Users.ToListAsync(cancellationToken).ConfigureAwait(false);
+        var users = await _context.Users
+            .AsNoTracking()
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
 
         return Result<IEnumerable<UserDto>>.Success(users.Select(u => new UserDto(u)));
     }

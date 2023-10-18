@@ -19,6 +19,7 @@ public sealed class GetTodosHandler : IRequestHandler<GetTodosQuery, Result<IEnu
     public async Task<Result<IEnumerable<TodoDto>>> Handle(GetTodosQuery request, CancellationToken cancellationToken)
     {
         var todos = await _context.Todos.Include(t => t.AssignedUsers)
+            .AsNoTracking()
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
