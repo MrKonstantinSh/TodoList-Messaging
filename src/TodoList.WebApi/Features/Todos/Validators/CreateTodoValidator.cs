@@ -27,6 +27,7 @@ public class CreateTodoValidator : AbstractValidator<CreateTodoCommand>
             .MustAsync(async (userId, cancellationToken) =>
             {
                 var user = await context.Users
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 

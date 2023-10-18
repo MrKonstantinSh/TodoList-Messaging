@@ -22,6 +22,13 @@ public sealed class TodosController : ControllerBase
         var query = new GetTodosQuery();
         return this.ToActionResult(await _mediator.Send(query));
     }
+    
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<TodoDto?>> GetById([FromRoute] Guid id)
+    {
+        var query = new GetTodoByIdQuery(id);
+        return this.ToActionResult(await _mediator.Send(query));
+    }
 
     [HttpPost]
     public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoRequest request)
