@@ -33,7 +33,7 @@ public sealed class TodosController : ControllerBase
     }
     
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<TodoDto?>> Create([FromRoute] Guid id, [FromBody] UpdateTodoRequest request)
+    public async Task<ActionResult<TodoDto?>> Update([FromRoute] Guid id, [FromBody] UpdateTodoRequest request)
     {
         var command = new UpdateTodoCommand(id, request.Title, request.Description,
             request.Status, request.AssignedUserIds);
