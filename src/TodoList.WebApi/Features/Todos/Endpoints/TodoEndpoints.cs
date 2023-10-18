@@ -40,4 +40,11 @@ public sealed class TodosController : ControllerBase
         
         return this.ToActionResult(await _mediator.Send(command));
     }
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<bool>> Delete([FromRoute] Guid id)
+    {
+        var command = new DeleteTodoCommand(id);
+        return this.ToActionResult(await _mediator.Send(command));
+    }
 }
