@@ -8,6 +8,5 @@ public sealed class UserMappingProfile : Profile
     public UserMappingProfile()
     {
         CreateMap<CreateUserCommand, User>();
-        CreateMap<UpdateUserCommand, User>();
     }
 }

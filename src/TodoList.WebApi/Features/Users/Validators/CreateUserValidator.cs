@@ -26,6 +26,7 @@ public sealed class CreateUserValidator : AbstractValidator<CreateUserCommand>
             .MustAsync(async (email, cancellationToken) =>
             {
                 var user = await context.Users
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(u => u.Email == email, cancellationToken)
                     .ConfigureAwait(false);
 

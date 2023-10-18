@@ -1,5 +1,4 @@
 using Ardalis.Result;
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TodoList.WebApi.DataAccess;
@@ -11,31 +10,31 @@ public sealed record UpdateUserCommand(Guid Id, string FirstName, string LastNam
 
 public sealed class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Result<UserDto?>>
 {
-    private readonly IMapper _mapper;
     private readonly AppDbContext _context;
 
-    public UpdateUserHandler(IMapper mapper, AppDbContext context)
+    public UpdateUserHandler(AppDbContext context)
     {
-        _mapper = mapper;
         _context = context;
     }
 
     public async Task<Result<UserDto?>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = _mapper.Map<User>(request);
         var existingUser = await _context.Users
-            .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken)
+            .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             .ConfigureAwait(false);
         
         if (existingUser is null)
         {
             return Result<UserDto?>.NotFound();
         }
+
+        existingUser.FirstName = request.FirstName;
+        existingUser.LastName = request.LastName;
+        existingUser.Email = request.Email;
         
-        _context.Users.Update(user);
+        _context.Users.Update(existingUser);
         await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         
-        return Result<UserDto?>.Success(new UserDto(user));
+        return Result<UserDto?>.Success(new UserDto(existingUser));
     }
 }
