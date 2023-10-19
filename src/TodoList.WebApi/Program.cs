@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TodoList.WebApi.DataAccess;
 using TodoList.WebApi.Features.Users;
 using TodoList.WebApi.Features.Users.Commands;
@@ -25,7 +26,10 @@ builder.Services.AddMediatR(config =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Todo List - API", Version = "v1" });
+});
 
 var app = builder.Build();
 

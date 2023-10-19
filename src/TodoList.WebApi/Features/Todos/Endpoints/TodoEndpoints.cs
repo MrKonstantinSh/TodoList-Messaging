@@ -17,6 +17,8 @@ public sealed class TodosController : ControllerBase
     }
     
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<TodoDto>), 200)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<IEnumerable<TodoDto>>> GetAll()
     {
         var query = new GetTodosQuery();
@@ -24,6 +26,9 @@ public sealed class TodosController : ControllerBase
     }
     
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(TodoDto), 200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<TodoDto?>> GetById([FromRoute] Guid id)
     {
         var query = new GetTodoByIdQuery(id);
@@ -31,6 +36,9 @@ public sealed class TodosController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(TodoDto), 200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoRequest request)
     {
         var command = new CreateTodoCommand(request.Title, request.Description,
@@ -40,6 +48,10 @@ public sealed class TodosController : ControllerBase
     }
     
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(TodoDto), 200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<TodoDto?>> Update([FromRoute] Guid id, [FromBody] UpdateTodoRequest request)
     {
         var command = new UpdateTodoCommand(id, request.Title, request.Description,
@@ -49,6 +61,9 @@ public sealed class TodosController : ControllerBase
     }
     
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid id)
     {
         var command = new DeleteTodoCommand(id);
