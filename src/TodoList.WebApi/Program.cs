@@ -2,6 +2,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using TodoList.WebApi;
 using TodoList.WebApi.DataAccess;
 using TodoList.WebApi.Features.Users;
 using TodoList.WebApi.Features.Users.Commands;
@@ -38,6 +39,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+var logger = app.Services.GetRequiredService<ILogger<ExceptionMiddleware>>();
+app.UseMiddleware<ExceptionMiddleware>(logger);
 
 app.UseHttpsRedirection();
 
