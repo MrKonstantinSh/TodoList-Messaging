@@ -1,4 +1,5 @@
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,6 +23,14 @@ builder.Services.AddMediatR(config =>
     
     config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
     config.RegisterValidationBehaviors();
+});
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((_, config) =>
+    {
+        config.Host(builder.Configuration["RabbitMQ:ConnectionString"]);
+    });
 });
 
 builder.Services.AddControllers();
