@@ -49,7 +49,7 @@ services:
   
   rabbitmq:
     container_name: todolist.rabbitmq
-    image: rabbitmq:management
+    image: rabbitmq:3-management
     restart: always
     environment:
       - RABBITMQ_DEFAULT_USER={USERNAME}
