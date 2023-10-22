@@ -25,9 +25,9 @@ builder.Services.AddMediatR(config =>
     config.RegisterValidationBehaviors();
 });
 
-builder.Services.AddMassTransit(x =>
+builder.Services.AddMassTransit(busConfig =>
 {
-    x.UsingRabbitMq((_, config) =>
+    busConfig.UsingRabbitMq((_, config) =>
     {
         config.Host(builder.Configuration["RabbitMQ:ConnectionString"]);
     });

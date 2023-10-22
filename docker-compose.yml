@@ -14,7 +14,22 @@ services:
       - '4444:443'
     depends_on:
       - db
+      - rabbitmq
     networks: 
+      - dev
+        
+  todolist-emailsender:
+    container_name: todolist.emailsender
+    image: ${DOCKER_REGISTRY-}todolist.emailsender
+    build:
+      context: .
+      dockerfile: ./src/TodoList.EmailSender/Dockerfile
+    ports:
+      - '5555:80'
+      - '6666:443'
+    depends_on:
+      - rabbitmq
+    networks:
       - dev
   
   db:

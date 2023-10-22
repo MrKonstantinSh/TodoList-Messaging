@@ -2,8 +2,8 @@
 using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TodoList.MessagingContracts.Commands;
 using TodoList.WebApi.DataAccess;
-using TodoList.WebApi.Messaging.Commands;
 
 namespace TodoList.WebApi.Features.Todos.Commands;
 
