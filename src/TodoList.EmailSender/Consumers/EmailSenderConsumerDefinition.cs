@@ -7,5 +7,6 @@ public sealed class EmailSenderConsumerDefinition : ConsumerDefinition<EmailSend
     public EmailSenderConsumerDefinition(IConfiguration configuration)
     {
         EndpointName = configuration["RabbitMQ:SendEmailQueue"]!;
+        ConcurrentMessageLimit = 1;
     }
 }
