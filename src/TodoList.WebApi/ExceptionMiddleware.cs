@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace TodoList.WebApi;
 
-public class ErrorDetails
+public sealed class ErrorDetails
 {
     public string? Title { get; set; }
     public int Status { get; set; }
@@ -20,7 +20,7 @@ public class ErrorDetails
     }
 }
 
-public class ExceptionMiddleware
+public sealed class ExceptionMiddleware
 {
     private readonly ILogger<ExceptionMiddleware> _logger;
     private readonly RequestDelegate _next;

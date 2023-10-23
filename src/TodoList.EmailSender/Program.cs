@@ -13,6 +13,7 @@ builder.Services.AddMassTransit(busConfig =>
     busConfig.UsingRabbitMq((context, config) =>
     {
         config.Host(builder.Configuration["RabbitMQ:ConnectionString"]);
+        config.UseMessageRetry(r => r.Incremental(5, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30)));
         config.ConfigureEndpoints(context);
     });
 });

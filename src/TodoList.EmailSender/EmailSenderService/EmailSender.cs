@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Mail;
 
 namespace TodoList.EmailSender.EmailSenderService;
@@ -15,13 +16,16 @@ public sealed class EmailSender : IEmailSender
 
     public async Task SendEmailAsync(ICollection<string> to, string subject, string body)
     {
-        try
+        var smtpServer = _configuration["EmailSender:SmtpServer"];
+        var port = int.Parse(_configuration["EmailSender:Port"]!);
+        var emailFrom = _configuration["EmailSender:EmailFrom"]!;
+        var passwordFrom = _configuration["EmailSender:PasswordFrom"]!;
+        
+        using (var emailClient = new SmtpClient(smtpServer, port))
         {
-            var smtpServer = _configuration["EmailSender:SmtpServer"];
-            var port = int.Parse(_configuration["EmailSender:Port"]!);
-            var emailClient = new SmtpClient(smtpServer, port);
-
-            var emailFrom = _configuration["EmailSender:EmailFrom"]!;
+            emailClient.EnableSsl = true;
+            emailClient.Credentials = new NetworkCredential(emailFrom, passwordFrom);
+            
             var message = new MailMessage
             {
                 From = new MailAddress(emailFrom),
@@ -35,12 +39,8 @@ public sealed class EmailSender : IEmailSender
             }
             
             await emailClient.SendMailAsync(message);
+        }
 
-            _logger.LogWarning("Sending email to {To} from {From} with subject {Subject}.", to, emailFrom, subject);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("An error occurred while sending the email: {Exception}", ex);
-        }
+        _logger.LogInformation("Email has sent to {To} from {From} with subject {Subject}", to, emailFrom, subject);
     }
 }
