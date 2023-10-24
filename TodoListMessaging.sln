@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.EmailSender", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.MessagingContracts", "src\TodoList.MessagingContracts\TodoList.MessagingContracts.csproj", "{F6E5FFB9-12EB-4BE7-9A89-8131FEB71CC0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C2885035-1D91-445E-8F46-BC1C51B0EEB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.WebApi.UnitTests", "tests\TodoList.WebApi.UnitTests\TodoList.WebApi.UnitTests.csproj", "{3DA074BF-C08A-4323-8E26-443DBE74F592}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,7 @@ Global
 		{9967A26D-05F2-4B59-8A57-FCDD5300282C} = {DB1F46F3-81FB-45AA-AC95-2A5FEDD263A3}
 		{19EEF705-7532-411A-9F4B-6219FEC5D3CF} = {DB1F46F3-81FB-45AA-AC95-2A5FEDD263A3}
 		{F6E5FFB9-12EB-4BE7-9A89-8131FEB71CC0} = {DB1F46F3-81FB-45AA-AC95-2A5FEDD263A3}
+		{3DA074BF-C08A-4323-8E26-443DBE74F592} = {C2885035-1D91-445E-8F46-BC1C51B0EEB3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9967A26D-05F2-4B59-8A57-FCDD5300282C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -31,5 +36,9 @@ Global
 		{F6E5FFB9-12EB-4BE7-9A89-8131FEB71CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E5FFB9-12EB-4BE7-9A89-8131FEB71CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E5FFB9-12EB-4BE7-9A89-8131FEB71CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA074BF-C08A-4323-8E26-443DBE74F592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA074BF-C08A-4323-8E26-443DBE74F592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA074BF-C08A-4323-8E26-443DBE74F592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA074BF-C08A-4323-8E26-443DBE74F592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
