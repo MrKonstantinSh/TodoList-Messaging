@@ -64,7 +64,7 @@ public sealed class UpdateTodoHandler : IRequestHandler<UpdateTodoCommand, Resul
         
         existingTodo.AssignedUsers = resultAssignedUsers;
         
-        _context.Update(existingTodo);
+        _context.Todos.Update(existingTodo);
         await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         
         // Send message to message queue if status has changed.

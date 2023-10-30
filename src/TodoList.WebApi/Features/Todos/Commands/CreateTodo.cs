@@ -36,7 +36,7 @@ public sealed class CreateTodoHandler : IRequestHandler<CreateTodoCommand, Resul
 
         todo.AssignedUsers = users;
 
-        _context.Add(todo);
+        _context.Todos.Add(todo);
         await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return Result<TodoDto>.Success(new TodoDto(todo));

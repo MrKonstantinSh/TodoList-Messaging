@@ -1,6 +1,6 @@
 using TodoList.WebApi.Features.Users;
 
-namespace TodoList.WebApi.UnitTests.Features.Users;
+namespace TodoList.WebApi.UnitTests.Features;
 
 public static class UserUtils
 {
