@@ -26,7 +26,8 @@ public sealed class CreateUserTests
     
     [Theory]
     [MemberData(nameof(UserTestDataSources.CreateUserCommandIsExecutedSuccessfullyDataSources), MemberType = typeof(UserTestDataSources))]
-    public async Task Create_user_command_is_executed_successfully(string firstName, string lastName, string? email)
+    public async Task Create_user_command_is_executed_successfully(string firstName, string lastName,
+        string? email, UserDto expectedUser)
     {
         // Arrange
         var createUserCommand = new CreateUserCommand(firstName, lastName, email);
@@ -40,8 +41,6 @@ public sealed class CreateUserTests
         await _mockContext.Received().SaveChangesAsync(Arg.Any<CancellationToken>());
         
         commandResult.IsSuccess.Should().BeTrue();
-        commandResult.Value.FirstName.Should().BeEquivalentTo(firstName);
-        commandResult.Value.LastName.Should().BeEquivalentTo(lastName);
-        commandResult.Value.Email.Should().BeEquivalentTo(email);
+        commandResult.Value.Should().BeEquivalentTo(expectedUser);
     }
 }

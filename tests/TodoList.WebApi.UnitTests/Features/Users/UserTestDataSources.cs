@@ -13,6 +13,7 @@ public static class UserTestDataSources
                 "TestFirstName",
                 "TestLastName",
                 "test1@gmail.com",
+                new UserDto(Guid.Empty, "TestFirstName", "TestLastName", "test1@gmail.com")
             };
             
             yield return new object?[]
@@ -20,6 +21,7 @@ public static class UserTestDataSources
                 "TestFirstName",
                 "TestLastName",
                 null,
+                new UserDto(Guid.Empty, "TestFirstName", "TestLastName", null)
             };
         }
     }
