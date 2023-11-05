@@ -141,4 +141,52 @@ public static class TodoTestDataSources
             };
         }
     }
+    
+    public static IEnumerable<object?[]> GetTodosQueryIsExecutedSuccessfullyDataSources
+    {
+        get
+        {
+            yield return new object[]
+            {
+                new List<TodoDto>
+                {
+                    new(Guid.Parse(TodoUtils.TestTodoFirstId), "Test title 1", "Test description 1", "To Do",
+                        new List<UserDto>
+                        {
+                            new(Guid.Parse(UserUtils.TestUserFirstId), "TestFirstNameFirst", "TestLastNameFirst", "test1@gmail.com"),
+                            new(Guid.Parse(UserUtils.TestUserSecondId), "TestFirstNameSecond", "TestLastNameSecond", "test2@gmail.com")
+                        }),
+                    new(Guid.Parse(TodoUtils.TestTodoSecondId), "Test title 2", "Test description 2", "In Progress", new List<UserDto>()),
+                }
+            };
+        }
+    }
+    
+    public static IEnumerable<object?[]> GetTodoByIdQueryIsExecutedSuccessfullyDataSources
+    {
+        get
+        {
+            yield return new object[]
+            {
+                TodoUtils.TestTodoFirstId,
+                new TodoDto(Guid.Parse(TodoUtils.TestTodoFirstId), "Test title 1", "Test description 1", "To Do",
+                    new List<UserDto> 
+                    {
+                        new(Guid.Parse(UserUtils.TestUserFirstId), "TestFirstNameFirst", "TestLastNameFirst", "test1@gmail.com"),
+                        new(Guid.Parse(UserUtils.TestUserSecondId), "TestFirstNameSecond", "TestLastNameSecond", "test2@gmail.com")
+                    })
+            };
+        }
+    }
+    
+    public static IEnumerable<object?[]> GetTodoByIdQueryIfTodoIdIsNotExistReturnsNotFoundDataSources
+    {
+        get
+        {
+            yield return new object[]
+            {
+                Guid.Parse(TodoUtils.TestTodoNonExistentId),
+            };
+        }
+    }
 }
