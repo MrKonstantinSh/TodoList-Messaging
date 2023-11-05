@@ -1,0 +1,81 @@
+networks:
+  dev:
+    driver: bridge
+
+services:
+  todolist-webapi:
+    container_name: todolist.webapi
+    image: ${DOCKER_REGISTRY-}todolist.webapi
+    build:
+      context: .
+      dockerfile: ./src/TodoList.WebApi/Dockerfile
+    ports:
+      - '3333:80'
+      - '4444:443'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        restart: true
+      db:
+        condition: service_healthy
+        restart: true
+    networks: 
+      - dev
+        
+  todolist-emailsender:
+    container_name: todolist.emailsender
+    image: ${DOCKER_REGISTRY-}todolist.emailsender
+    build:
+      context: .
+      dockerfile: ./src/TodoList.EmailSender/Dockerfile
+    ports:
+      - '5555:80'
+      - '6666:443'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        restart: true
+    networks:
+      - dev
+  
+  db:
+    container_name: todolist.db
+    image: postgres:16.0
+    restart: always
+    environment:
+      - POSTGRES_USER={USERNAME}
+      - POSTGRES_PASSWORD={PASSWORD}
+      - POSTGRES_DB={DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - dev
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U {POSTGRES_USER} -d {POSTGRES_DB}'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  
+  rabbitmq:
+    container_name: todolist.rabbitmq
+    image: rabbitmq:management
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER={USERNAME}
+      - RABBITMQ_DEFAULT_PASS={PASSWORD}
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - dev
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+volumes:
+  db:
+    driver: local
