@@ -1,4 +1,4 @@
-<div style="text-align: center">
+<div align="center">
 
   ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/MrKonstantinSh/TodoList-Messaging/dotnet.yml)
   ![GitHub issues](https://img.shields.io/github/issues/MrKonstantinSh/TodoList-Messaging)
@@ -10,14 +10,14 @@
 </div>
 
 <br />
-<div style="text-align: center">
+<div align="center">
   <a href="https://github.com/MrKonstantinSh/OpenScreen">
     <img src="https://cdn-icons-png.flaticon.com/512/7246/7246748.png" alt="TodoList-Messaging Logo" width="100" height="100" />
   </a>
 
   <h3 align="center">TodoList-Messaging</h3>
 
-  <div style="text-align: center">
+  <div align="center">
     Web API created to work with RabbitMQ and MassTransit using a simple To Do list as an example.
     <br />    
     <br />
@@ -94,7 +94,7 @@ The available endpoints can be viewed at link http://{HOST:PORT}/swagger/index.h
 
 ### System Description
 <img src="./docs/images/diagram.png" alt="TodoList-Messaging Diagram" />
-<p style="text-align: center">Diagram of interaction of system elements</p>
+<p align="center">Diagram of interaction of system elements</p>
 
 **TodoList.WebApi** - Web API that provides the ability to perform CRUD operations on User and Todo entities. When a Todo entity's status changes, it sends a message to the message broker ([RabbitMQ](https://www.rabbitmq.com)) using the [MassTransit](https://masstransit.io) framework.
 
